@@ -18,7 +18,8 @@ def index():
     """
     List guestbook
     """
-    entries = [dict(name=row[0], email=row[1], signed_on=row[2], message=row[3] ) for row in model.select()]
+    entries = [dict(name=row[0], staddr=row[1], city=row[2], state=row[3], zipcode=row[4], storehours=row[5], phonenumber=row[6],
+                    rating=row[7], menu=row[8], review=row[9], signed_on=row[10]) for row in model.select()]
     return render_template('index.html', entries=entries)
 
 @app.route('/sign', methods=['POST'])
@@ -27,7 +28,9 @@ def sign():
     Accepts POST requests, and processes the form;
     Redirect to index when completed.
     """
-    model.insert(request.form['name'], request.form['email'], request.form['message'])
+    model.insert(request.form['name'], request.form['staddr'], request.form['city'], request.form['state'],
+                 request.form['zipcode'], request.form['storehours'], request.form['phonenumber'], request.form['rating'],
+                 request.form['menu'], request.form['review'])
     return redirect(url_for('index'))
 
 if __name__ == '__main__':

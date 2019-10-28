@@ -7,7 +7,7 @@ from Model import Model
 
 class model(Model):
     def __init__(self):
-        self.guestentries = []
+        self.bubbleteaentries = []
 
     def select(self):
         """
@@ -15,9 +15,9 @@ class model(Model):
         Each list in guestentries contains: name, email, date, message
         :return: List of lists
         """
-        return self.guestentries
+        return self.bubbleteaentries
 
-    def insert(self, name, email, message):
+    def insert(self, name, staddr, city, state, zipcode, storehours, phonenumber, rating, menu, review):
         """
         Appends a new list of values representing new message into guestentries
         :param name: String
@@ -25,6 +25,6 @@ class model(Model):
         :param message: String
         :return: True
         """
-        params = [name, email, date.today(), message]
-        self.guestentries.append(params)
+        params = [name, staddr, city, state, zipcode, storehours, phonenumber, rating, menu, review, date.today()]
+        self.bubbleteaentries.append(params)
         return True

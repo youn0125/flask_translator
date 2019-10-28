@@ -1,20 +1,33 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h2>Guestbook</h2>
+    <h2>Bubble Tea Store</h2>
     <form action="{{ url_for('sign') }}" method=post>
 	<p class="heading">Name: <input type=text name=name>
-	<p class="heading">Email: <input type=text name=email>
-        <p class="heading">Message:
-	<textarea rows=5 cols=50 name=message></textarea></p>
+    <p class="heading">Street Address: <input type=text name=staddr>
+    <p class="heading">City: <input type=text name=city>
+    <p class="heading">State: <input type=text name=state>
+    <p class="heading">Zipcode: <input type=text name=zipcode>
+	<p class="heading">Store hours: <input type=text name=storehours>
+    <p class="heading">Phone Number: <input type=text name=phonenumber>
+    <p class="heading">Rating: <input type=text name=rating>
+    <p class="heading">Menu:
+	<textarea rows=5 cols=50 name=menu></textarea></p>
+    <p class="heading">Review:
+    <textarea rows=5 cols=50 name=review></textarea></p>
 	<p><input type=submit value=Sign></p>
     </form>
 
     <h2>Entries</h2>
     {% for entry in entries %}
         <p class=entry>
-            {{ entry.name }} &lt;{{ entry.email }}&gt;
+            {{ entry.name }}<br>
+            {{ entry.staddr }}<br>
+            {{ entry.city }} &lt;{{ entry.state }}&gt;{{ entry.zipcode }} &lt;<br>
+            {{ entry.storehours }}&gt;{{ entry.phonenumber }} &lt;<br>
+            {{ entry.rating }}&gt;<br>
+            {{ entry.menu }}<br>
+            {{ entry.review }}
 	    <br>signed on {{ entry.signed_on }}<br>
-	    {{ entry.message }}
         </p>
     {% endfor %}
 
