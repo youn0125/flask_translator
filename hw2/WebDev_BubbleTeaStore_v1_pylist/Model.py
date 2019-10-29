@@ -6,7 +6,7 @@ class Model():
         """
         pass
 
-    def insert(self, name, email, message):
+    def insert(self, name, staddr, city, state, zipcode, storehours, phonenumber, rating, menu, review):
         """
         Inserts entry into database
         :param name: String

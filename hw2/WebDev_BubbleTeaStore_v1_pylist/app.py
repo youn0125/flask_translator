@@ -3,8 +3,8 @@ A simple guestbook flask app.
 """
 from flask import Flask, redirect, request, url_for, render_template
 
-#from model_sqlite3 import model
-from model_pylist import model
+from model_sqlite3 import model
+#from model_pylist import model
 
 app = Flask(__name__)       # our Flask app
 model = model()
@@ -34,4 +34,4 @@ def sign():
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
