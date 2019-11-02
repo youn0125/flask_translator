@@ -10,8 +10,15 @@ class Model():
         """
         Inserts entry into database
         :param name: String
-        :param email: String
-        :param message: String
+        :param staddr: String
+        :param city: String
+        :param state: String
+        :param zipcode: String
+        :param storehours: String
+        :param phonenumber: String
+        :param rating: String
+        :param menu: String
+        :param review: String
         :return: none
         :raises: Database errors on connection and insertion
         """
