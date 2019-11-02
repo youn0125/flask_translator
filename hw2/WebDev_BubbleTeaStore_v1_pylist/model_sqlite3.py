@@ -1,16 +1,16 @@
 """
-A simple guestbook flask app.
+A simple bubble tea store flask app.
 ata is stored in a SQLite database that looks something like the following:
 
-+------------+------------------+------------+----------------+
-| Name       | Email            | signed_on  | message        |
-+============+==================+============+----------------+
-| John Doe   | jdoe@example.com | 2012-05-28 | Hello world    |
-+------------+------------------+------------+----------------+
++---------+-----------------+-----------+-------+---------+-------------+--------------+--------+---------------+---------+------------+
+| Name    | Street          | City      | State | Zipcode | Store Hours | Phonenumber  | Rating | Menu          | Review  | signed_on  |
++=========+=================+===========+=======+=========+=============+==============+========+===============+=========+============+
+| Bubble  |232 SW 122th Ave | Beaverton | OR    | 98006   | M-Sa: 10-9  | 503-232-1212 | 4      |Mango Bubble...| Awesome | 2012-05-28 |
++---------+-----------------+-----------+-------+---------+-------------+--------------+--------+---------------+---------+------------+
 
 This can be created with the following SQL (see bottom of this file):
 
-    create table guestbook (name text, email text, signed_on date, message);
+    create table bubbleteaStore (name text, staddr text, city text, state text, zipcode text, storehours text, phonenumber text,rating text, menu, review, signed_on date);
 
 """
 from datetime import date
@@ -32,7 +32,7 @@ class model(Model):
     def select(self):
         """
         Gets all rows from the database
-        Each row contains: name, email, date, message
+        Each row contains: name, staddr, city, state, zipcode, storehours, phonenumber, rating, menu, review, date
         :return: List of lists containing all rows of database
         """
         connection = sqlite3.connect(DB_FILE)
@@ -44,8 +44,15 @@ class model(Model):
         """
         Inserts entry into database
         :param name: String
-        :param email: String
-        :param message: String
+        :param staddr: String
+        :param city: String
+        :param state: String
+        :param zipcode: String
+        :param storehours: String
+        :param phonenumber: String
+        :param rating: String
+        :param menu: String
+        :param review: String
         :return: True
         :raises: Database errors on connection and insertion
         """
