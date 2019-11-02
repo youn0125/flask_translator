@@ -6,9 +6,14 @@
     <h3>Entries</h3>
     {% for entry in entries %}
         <p class=entry>
-            {{ entry.name }} &lt;{{ entry.email }}&gt;
-	    <br>signed on {{ entry.signed_on }}<br>
-	    {{ entry.message }}
+            {{ entry.name }}     {{ entry.rating }}<br>
+            {{ entry.staddr }}<br>
+            {{ entry.city }}   {{ entry.state }}   {{ entry.zipcode }}<br>
+            {{ entry.storehours }}   &lt;{{ entry.phonenumber }} &gt;<br>
+
+            {{ entry.menu }}<br>
+            {{ entry.review }}
+        <br>signed on {{ entry.signed_on }}<br>
         </p>
     {% endfor %}
 
