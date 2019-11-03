@@ -16,5 +16,5 @@ app.add_url_rule('/sign/',
                  view_func=Sign.as_view('sign'),
                  methods=['GET', 'POST'])
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True)
+if __name__ == '__main__':	
+    app.run(host='0.0.0.0', port=8000, debug=True)	# port number 8000
