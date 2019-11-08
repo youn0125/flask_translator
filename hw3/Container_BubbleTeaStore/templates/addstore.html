@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Add Bubble Tea Store</h2>
+    <form action="{{ url_for('addstore') }}" method=post>
+	<input type=text name=name placeholder="Store Name">
+    <input type=text name=staddr placeholder="Streeet Address">
+    <input type=text name=city placeholder="City">
+    <input type=text name=state placeholder="State">
+    <input type=text name=zipcode placeholder="Zipcode">
+	<input type=text name=storehours placeholder="Store hours">
+    <input type=text name=phonenumber placeholder="Phone"><br>
+    <select name=rating>
+        <option value="&#9733;&#9734;&#9734;&#9734;&#9734;">&#9733;&#9734;&#9734;&#9734;&#9734;</option>
+        <option value="&#9733;&#9733;&#9734;&#9734;&#9734;">&#9733;&#9733;&#9734;&#9734;&#9734;</option>
+        <option value="&#9733;&#9733;&#9733;&#9734;&#9734;">&#9733;&#9733;&#9733;&#9734;&#9734;</option>
+        <option value="&#9733;&#9733;&#9733;&#9733;&#9734;">&#9733;&#9733;&#9733;&#9733;&#9734;</option>
+        <option value="&#9733;&#9733;&#9733;&#9733;&#9733;">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+    </select></p>
+    <textarea rows=5 cols=50 name=menu placeholder="Enter Bubbletea Menu"></textarea></p>
+    <textarea rows=5 cols=50 name=review placeholder="Leave your review"></textarea></p>
+	<p><input type=submit value=Add></p>
+    </form>
+{% endblock %}
