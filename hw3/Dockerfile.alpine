@@ -11,10 +11,12 @@ COPY . /app
 WORKDIR /app
 
 # Install the Python packages specified by requirements.txt into the container
-# Set the program that is invoked upon container instantiation
-# Set the parameters to the program
 RUN pip install --no-cache -r requirements.txt
+
+# Set the program that is invoked upon container instantiation
 ENTRYPOINT ["python"]
+
+# Set the parameters to the program
 CMD ["app.py"]
 
 
