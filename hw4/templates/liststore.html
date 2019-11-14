@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Bubble Tea Stores</h2>
+
+    <h3>Entries</h3>
+    {% for entry in entries %}
+        <p class=entry>
+            {{ entry.name }}     {{ entry.rating }}<br>
+            {{ entry.staddr }}<br>
+            {{ entry.city }}   {{ entry.state }}   {{ entry.zipcode }}<br>
+            {{ entry.storehours }}   &lt;{{ entry.phonenumber }} &gt;<br>
+            Menu: 
+            {{ entry.menu }}<br>
+            Review: 
+            {{ entry.review }}
+        <br>added on {{ entry.signed_on }}<br>
+        </p>
+    {% endfor %}
+    <h3>Add store <a href="/addstore/">here</a></h3>
+    <h3>Go to  <a href="/">home</a></h3>
+
+{% endblock %}
