@@ -6,9 +6,6 @@ if model_backend == 'sqlite3':
     from .model_sqlite3 import model
 elif model_backend == 'pylist':
     from .model_pylist import model
-"""
-import model from model_datastore
-"""
 elif model_backend == 'datastore':
     from .model_datastore import model
 else:

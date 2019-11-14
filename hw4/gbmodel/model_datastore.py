@@ -48,7 +48,7 @@ class model(Model):
         store = datastore.Entity(key)
         store.update( {
             'name': name,
-            'staddr': straddr,
+            'staddr': staddr,
             'city': city,
             'state': state,
             'zipcode': zipcode,
