@@ -36,14 +36,36 @@ def from_datastore(entity):
 
 class model(Model):
     def __init__(self):
+        """
+        Instantiate the client
+        """
         self.client = datastore.Client('cs430-miyon-kim')
 
     def select(self):
+        """
+        Gets all entities(kind='store') from the datastore through from_datastore function
+        Each row contains:name, staddr, city, state, zipcode, storehours, phonenumber, rating, menu, review, date
+        :return: List of lists containing all rows from datastore
+        """
         query = self.client.query(kind = 'Store')
         entities = list(map(from_datastore,query.fetch()))
         return entities
 
     def insert(self,name,staddr,city,state,zipcode,storehours,phonenumber,rating,menu,review):
+        """
+        Put entry into datastore
+        :param name: String
+        :param staddr: String
+        :param city: String
+        :param state: String
+        :param zipcode: String
+        :param storehours: String
+        :param phonenumber: String
+        :param rating: String
+        :param menu: String
+        :param review: String
+        :return: True
+        """
         key = self.client.key('Store')
         store = datastore.Entity(key)
         store.update( {
