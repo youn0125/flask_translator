@@ -37,79 +37,65 @@ def index():
 
 @app.route('/upload_speech', methods=['GET', 'POST'])
 def upload_speech():
-    #upload file to bucket
-
+    #Upload file to bucket
     speech_file = request.files['file']
-
+    # Create a Cloud Storage client.
     storage_client = storage.Client()
-   
+    # Get the bucket that the file will be uploaded to.
     bucket = storage_client.get_bucket(CLOUD_STORAGE_BUCKET)
-
+    # Create a new blob and upload the file's content.
     blob = bucket.blob(speech_file.filename)
-   
     blob.upload_from_string(speech_file.read(), content_type=speech_file.content_type)
-
+    # Make the blob publicly viewable.
     blob.make_public()
-
-    source_uri = 'gs://{}/{}'.format(CLOUD_STORAGE_BUCKET, blob.name)
-
-    datastore_client = datastore.Client()
-
-    current_datetime = datetime.now()
-
-    kind = 'Speech'
-
-    name = blob.name
-
-    key = datastore_client.key(kind, name)
-
-    entity = datastore.Entity(key)
-    entity['blob_name'] = blob.name
-    entity['audio_public_url'] = blob.public_url
-    entity['timestamp'] = current_datetime
-
-    datastore_client.put(entity)
-
-
-    # speech to text
-
-    client = speech.SpeechClient()
     
+    #Create Cloud Speech client
+    client = speech.SpeechClient()
     # specify location of speech
+    source_uri = 'gs://{}/{}'.format(CLOUD_STORAGE_BUCKET, blob.name)
     audio = speech.types.RecognitionAudio(uri=source_uri) # need to specify speech.types
-
     # set language to Turkish
     # removed encoding and sample_rate_hertz
     config = speech.types.RecognitionConfig(language_code='tr-TR') # need to specify speech.types
-
     # get response by passing config and audio settings to client
     response = client.recognize(config, audio)
-    
     #get transcription
     transcription = response.results[0].alternatives[0].transcript
 
-    print("Transcription: " + transcription)
-    
     # create Client object
     translate_client = translate.Client()
-
     # decode text if it's a binary type
     if isinstance(transcription, six.binary_type):
         transcription = transcription.decode('utf-8')
-
     # get translation result by passing text and target language to client
     # Text can also be a sequence of strings, in which case this method
     # will return a sequence of results for each text.
     result = translate_client.translate(transcription, target_language='en')
-
     # only interested in translated text
     translation = result['translatedText']
 
-    print(u'Text: {}'.format(result['input']))
-    print(u'Translation: {}'.format(result['translatedText']))
-    print(u'Detected source language: {}'.format(
-        result['detectedSourceLanguage']))
-    
+    # Create a Cloud Datastore client.
+    datastore_client = datastore.Client()
+    # Fetch the current date / time.
+    current_datetime = datetime.now()
+    # The kind for the new entity.
+    kind = 'Speech'
+    # The name/ID for the new entity.
+    name = blob.name
+    # Create the Cloud Datastore key for the new entity.
+    key = datastore_client.key(kind, name)
+    # Construct the new entity using the key. Set dictionary values for entity
+    # keys blob_name, storage_public_url, timestamp, transcription, and translation..
+    entity = datastore.Entity(key)
+    entity['blob_name'] = blob.name
+    entity['audio_public_url'] = blob.public_url
+    entity['timestamp'] = current_datetime
+    entity['transcription'] = transcription
+    entity['translation'] = translation
+    # Save the new entity to Datastore.
+    datastore_client.put(entity)
+
+    # Redirect to the home page.
     return redirect('/')
 
 @app.errorhandler(500)
