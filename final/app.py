@@ -5,13 +5,14 @@ A simple final project flask app.
 from datetime import datetime
 import logging
 import os
+import six
 
 from flask import Flask, redirect, render_template, request
 
 
 from google.cloud import datastore
 from google.cloud import storage
-from google.cloud import speech_v1 as speech
+from google.cloud import speech
 from google.cloud import translate_v2 as translate
 
 CLOUD_STORAGE_BUCKET = os.environ.get('CLOUD_STORAGE_BUCKET')
@@ -37,16 +38,16 @@ def index():
 @app.route('/upload_speech', methods=['GET', 'POST'])
 def upload_speech():
     #upload file to bucket
-    speech = request.files['file']
+
+    speech_file = request.files['file']
 
     storage_client = storage.Client()
-    
-    print("Cloud Storage Bucket:" + CLOUD_STORAGE_BUCKET)
+   
     bucket = storage_client.get_bucket(CLOUD_STORAGE_BUCKET)
-    
-    blob = bucket.blob(speech.filename)
-    blob.upload_from_string(
-            speech.read(), content_type=speech.content_type)
+
+    blob = bucket.blob(speech_file.filename)
+   
+    blob.upload_from_string(speech_file.read(), content_type=speech_file.content_type)
 
     blob.make_public()
 
@@ -69,23 +70,25 @@ def upload_speech():
 
     datastore_client.put(entity)
 
-    #speech to text
+
+    # speech to text
+
     client = speech.SpeechClient()
-    """
+    
     # specify location of speech
     audio = speech.types.RecognitionAudio(uri=source_uri) # need to specify speech.types
 
     # set language to Turkish
     # removed encoding and sample_rate_hertz
-    config = speech.types.RecognitionConfig(language_code=tr-TR) # need to specify speech.types
+    config = speech.types.RecognitionConfig(language_code='tr-TR') # need to specify speech.types
 
     # get response by passing config and audio settings to client
-    response = client.recognize(config, source_uri)
-
+    response = client.recognize(config, audio)
+    
     #get transcription
     transcription = response.results[0].alternatives[0].transcript
 
-    print("Trnascription: " + transcription)
+    print("Transcription: " + transcription)
     
     # create Client object
     translate_client = translate.Client()
@@ -101,7 +104,12 @@ def upload_speech():
 
     # only interested in translated text
     translation = result['translatedText']
-    """
+
+    print(u'Text: {}'.format(result['input']))
+    print(u'Translation: {}'.format(result['translatedText']))
+    print(u'Detected source language: {}'.format(
+        result['detectedSourceLanguage']))
+    
     return redirect('/')
 
 @app.errorhandler(500)
