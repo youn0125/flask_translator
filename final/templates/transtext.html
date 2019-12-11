@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for entry in entries %}
+      <p>Text: {{ entry.iText}} </p>
+      <p>Translation: {{ entry.transText }}</p>
+      <p>Listen to the <a href= {{entry.link }}>voice</a></p>
+    {% endfor %}
+    <p>Go to <a href="/">home</a></p>
+{% endblock %}

@@ -1,13 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-    <form action="upload_speech" method="POST" enctype="multipart/form-data">
-      Upload File: <input type="file" name="file"><br>
+    <h5>Enter your text. It'll translate to english and speak</h5>
+    <form action="trans_text" method="POST">
+      <input type="text" name="text" placeholder="Enter Text">
       <input type="submit" name="submit" value="Submit">
     </form>
-    {% for audio_entity in audio_entities %}
-      <p>{{audio_entity['blob_name']}} was uploaded {{audio_entity['timestamp']}}.</p>
-      <p>Transcription: {{audio_entity['transcription']}}</p>
-      <p>Translation: {{audio_entity['translation']}}</p>
-    {% endfor %}
-
 {% endblock %}
