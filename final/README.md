@@ -6,6 +6,6 @@ Portland State University Fall 2019 CS530(Internet, Web & Cloud Systems) individ
   - Programming languages: Python
   - Google Cloud Machine Learning APIs
 # Usage
-Our application translates the language you entered into a specific language.
+Our application translates the language you entered into English.
 # URL
 https://cs430-miyon-kim.appspot.com/
